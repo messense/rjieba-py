@@ -1,8 +1,5 @@
 # -*- coding: utf-8 -*-
-import rjieba
-
-
-jieba = rjieba.Jieba()
+import rjieba as jieba
 
 
 def test_cut():

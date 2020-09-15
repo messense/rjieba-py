@@ -17,9 +17,8 @@ pip install rjieba
 import rjieba
 
 
-jieba = rjieba.Jieba()
-print(jieba.cut('我们中出了一个叛徒'))
-print(jieba.tag('我们中出了一个叛徒'))
+print(rjieba.cut('我们中出了一个叛徒'))
+print(rjieba.tag('我们中出了一个叛徒'))
 ```
 
 ## Performance
@@ -39,19 +38,17 @@ Prefix dict has been built successfully.
 
 In [5]: cjieba.initialize()
 
-In [6]: rj = rjieba.Jieba()
-
-In [7]: with open('../jieba-rs/examples/weicheng/src/weicheng.txt') as f:
+In [6]: with open('../jieba-rs/examples/weicheng/src/weicheng.txt') as f:
    ...:     txt = f.read()
    ...:
 
-In [8]: %timeit list(jieba.cut(txt))
+In [7]: %timeit list(jieba.cut(txt))
 1.12 s ± 9.1 ms per loop (mean ± std. dev. of 7 runs, 1 loop each)
 
-In [9]: %timeit cjieba.cut(txt)
+In [8]: %timeit cjieba.cut(txt)
 242 ms ± 8.1 ms per loop (mean ± std. dev. of 7 runs, 1 loop each)
 
-In [10]: %timeit rj.cut(txt)
+In [9]: %timeit rjieba.cut(txt)
 110 ms ± 1.35 ms per loop (mean ± std. dev. of 7 runs, 10 loops each)
 ```
 
