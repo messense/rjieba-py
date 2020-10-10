@@ -13,31 +13,28 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
-        python-version: [3.5, 3.6, 3.7, 3.8]
+        python-version: [3.5, 3.6, 3.7, 3.8, 3.9]
     steps:
     - uses: actions/checkout@v2
-    - uses: actions-rs/toolchain@v1
-      with:
-        toolchain: stable
-        components: clippy
-        override: true
 
-    - uses: actions/setup-python@v1
+    - uses: actions/setup-python@v2
       with:
         python-version: ${{ matrix.python-version }}
         architecture: 'x64'
 
     - name: Build Wheels - Linux
       if: startsWith(matrix.os, 'ubuntu')
+      env:
+        PYTHON_VERSION: python${{ matrix.python-version }}
       run: |
         docker build . -t maturin:latest
-        docker run --rm -v $(pwd):/io maturin:latest sh -c "source ~/.cargo/env && maturin build --release --out dist"
+        docker run --rm -v $(pwd):/io maturin:latest sh -c "source ~/.cargo/env && maturin build -i $PYTHON_VERSION --release --out dist"
 
     - name: Build Wheels - Non-Linux
       if: startsWith(matrix.os, 'windows') || startsWith(matrix.os, 'macos')
       run: |
         pip install maturin
-        maturin build --release --out dist
+        maturin build -i python --release --out dist
 
     - name: Publish package - Non-Linux
       if: startsWith(matrix.os, 'windows') || startsWith(matrix.os, 'macos')
