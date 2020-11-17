@@ -15,5 +15,5 @@ name = "rjieba"
 crate-type = ["cdylib"]
 
 [dependencies]
-jieba-rs = "0.6.1"
+jieba-rs = "0.6.2"
 pyo3 = { version = "0.12.0", features = ["extension-module"] }
