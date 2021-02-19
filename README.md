@@ -1,6 +1,6 @@
 # rjieba-py
 
-![CI](https://github.com/messense/rjieba-py/workflows/Master/badge.svg)
+![CI](https://github.com/messense/rjieba-py/workflows/CI/badge.svg)
 [![PyPI](https://img.shields.io/pypi/v/rjieba.svg)](https://pypi.org/project/rjieba)
 
 [jieba-rs](https://github.com/messense/jieba-rs) Python binding.
