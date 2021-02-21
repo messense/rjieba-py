@@ -104,7 +104,7 @@ jobs:
         ' > build-wheel.sh
         chmod +x build-wheel.sh
 
-        docker run --rm -v "$PWD":/io -w /io quay.io/pypa/manylinux2014_${{ matrix.platform.arch }} bash build-wheel.sh
+        docker run --rm -v "$PWD":/io -w /io quay.io/pypa/manylinux${{ matrix.platform.manylinux }}_${{ matrix.platform.arch }} bash build-wheel.sh
     - name: Python UnitTest
       if: matrix.platform.arch == 'x86_64'
       run: |
