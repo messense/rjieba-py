@@ -1,6 +1,6 @@
 [package]
 name = "rjieba"
-version = "0.1.5"
+version = "0.1.6"
 authors = ["messense <messense@icloud.com>"]
 edition = "2018"
 description = "jieba-rs Python binding"
