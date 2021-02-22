@@ -111,6 +111,10 @@ jobs:
         pip install rjieba --no-index --find-links dist --force-reinstall
         pip install pytest
         cd tests && pytest -v
+    - name: Auditwheel Symbols
+      run: |
+        pip install auditwheel-symbols
+        auditwheel-symbols dist/*.whl
     - name: Upload wheels
       uses: actions/upload-artifact@v2
       with:
@@ -173,6 +177,10 @@ jobs:
           ls -lrth /artifacts
           pip3 install rjieba --no-index --find-links /artifacts --force-reinstall
           cd ~ && python3 -c "import rjieba"
+    - name: Auditwheel Symbols
+      run: |
+        pip install auditwheel-symbols
+        auditwheel-symbols dist/*.whl
     - name: Upload wheels
       uses: actions/upload-artifact@v2
       with:
