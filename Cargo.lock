@@ -139,9 +139,9 @@ dependencies = [
 
 [[package]]
 name = "jieba-rs"
-version = "0.6.3"
+version = "0.6.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "31a7e00da0a90e0de5d8dd1193b0216f5590a24ed633ae701ac50ca94467ef07"
+checksum = "fea3b3172a80f9958abc3b9a637e4e311cd696dc6813440e5cc929b8a5311055"
 dependencies = [
  "cedarwood",
  "fxhash",
@@ -409,7 +409,7 @@ checksum = "f497285884f3fcff424ffc933e56d7cbca511def0c9831a7f9b5f6153e3cc89b"
 
 [[package]]
 name = "rjieba"
-version = "0.1.7"
+version = "0.1.8"
 dependencies = [
  "jieba-rs",
  "pyo3",
