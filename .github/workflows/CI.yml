@@ -119,6 +119,7 @@ jobs:
           { target: "armv7-unknown-linux-gnueabihf", arch: "armv7" },
           { target: "s390x-unknown-linux-gnu", arch: "s390x" },
           { target: "powerpc64le-unknown-linux-gnu", arch: "ppc64le" },
+          { target: "powerpc64-unknown-linux-gnu", arch: "ppc64" },
         ]
     steps:
     - uses: actions/checkout@v2
@@ -133,6 +134,7 @@ jobs:
         manylinux: auto
         args: --release --out dist --no-sdist
     - uses: uraimo/run-on-arch-action@v2.0.5
+      if: matrix.platform.arch != 'ppc64'
       name: Install built wheel
       with:
         arch: ${{ matrix.platform.arch }}
