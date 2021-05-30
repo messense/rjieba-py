@@ -1,6 +1,6 @@
 [package]
 name = "rjieba"
-version = "0.1.8"
+version = "0.1.9"
 authors = ["messense <messense@icloud.com>"]
 edition = "2018"
 description = "jieba-rs Python binding"
@@ -15,5 +15,5 @@ name = "rjieba"
 crate-type = ["cdylib"]
 
 [dependencies]
-jieba-rs = "0.6.2"
+jieba-rs = "0.6.4"
 pyo3 = { version = "0.13.2", features = ["abi3-py36", "extension-module"] }
