@@ -16,27 +16,27 @@ impl Jieba {
 
     /// Cut the input text
     #[args(hmm = "true")]
-    #[text_signature = "($self, text, hmm)"]
+    #[pyo3(text_signature = "($self, text, hmm)")]
     fn cut<'a>(&self, py: Python, text: &'a str, hmm: bool) -> Vec<&'a str> {
         py.allow_threads(move || self.jieba.cut(text, hmm))
     }
 
     /// Cut the input text, return all possible words
-    #[text_signature = "($self, text)"]
+    #[pyo3(text_signature = "($self, text)")]
     fn cut_all<'a>(&self, py: Python, text: &'a str) -> Vec<&'a str> {
         py.allow_threads(move || self.jieba.cut_all(text))
     }
 
     /// Cut the input text in search mode
     #[args(hmm = "true")]
-    #[text_signature = "($self, text, hmm)"]
+    #[pyo3(text_signature = "($self, text, hmm)")]
     fn cut_for_search<'a>(&self, py: Python, text: &'a str, hmm: bool) -> Vec<&'a str> {
         py.allow_threads(move || self.jieba.cut_for_search(text, hmm))
     }
 
     /// Tag the input text
     #[args(hmm = "true")]
-    #[text_signature = "($self, text, hmm)"]
+    #[pyo3(text_signature = "($self, text, hmm)")]
     fn tag<'a>(&'a self, py: Python, text: &'a str, hmm: bool) -> Vec<(&'a str, &'a str)> {
         py.allow_threads(move || {
             self.jieba
@@ -49,7 +49,7 @@ impl Jieba {
 
     /// Tokenize
     #[args(mode = "\"default\"", hmm = "true")]
-    #[text_signature = "($self, text, mode, hmm)"]
+    #[pyo3(text_signature = "($self, text, mode, hmm)")]
     fn tokenize<'a>(
         &self,
         py: Python,
