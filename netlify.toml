@@ -1,4 +1,4 @@
 [build]
   base = "docs"
   publish = "_build/html"
-  command = "maturin develop -m ../Cargo.toml && make html"
+  command = "maturin build -m ../Cargo.toml && python3 -m pip install --force-reinstall ../target/wheels/rjieba*.whl && make html"
