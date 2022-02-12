@@ -87,7 +87,7 @@ jobs:
       with:
         python-version: 3.9
         architecture: x64
-    - name: Build Wheels
+    - name: Build wheels
       uses: messense/maturin-action@v1
       with:
         target: ${{ matrix.target }}
@@ -115,7 +115,7 @@ jobs:
     - uses: actions/setup-python@v2
       with:
         python-version: 3.9
-    - name: Build Wheels
+    - name: Build wheels
       uses: messense/maturin-action@v1
       with:
         target: ${{ matrix.target }}
@@ -126,7 +126,7 @@ jobs:
       name: Install built wheel
       with:
         arch: ${{ matrix.target }}
-        distro: ubuntu18.04
+        distro: ubuntu20.04
         githubToken: ${{ github.token }}
         install: |
           apt-get update
