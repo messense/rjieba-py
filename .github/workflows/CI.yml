@@ -110,6 +110,7 @@ jobs:
   linux-cross:
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         target: [aarch64, armv7, s390x, ppc64le, ppc64]
     steps:
@@ -122,7 +123,8 @@ jobs:
       with:
         target: ${{ matrix.target }}
         manylinux: auto
-        args: --release --out dist
+        container: off
+        args: --release --out dist --zig
     - uses: uraimo/run-on-arch-action@v2.2.1
       if: matrix.target != 'ppc64'
       name: Install built wheel
