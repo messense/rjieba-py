@@ -158,7 +158,6 @@ jobs:
     - name: Build wheels
       uses: messense/maturin-action@v1
       with:
-        rust-toolchain: nightly
         target: ${{ matrix.target }}
         manylinux: musllinux_1_2
         args: --release --out dist --no-sdist
@@ -196,7 +195,6 @@ jobs:
     - name: Build wheels
       uses: messense/maturin-action@v1
       with:
-        rust-toolchain: nightly
         target: ${{ matrix.platform.target }}
         manylinux: musllinux_1_2
         args: --release --out dist --no-sdist
