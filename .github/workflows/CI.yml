@@ -10,10 +10,10 @@ jobs:
   macos:
     runs-on: macos-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-python@v2
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
         with:
-          python-version: 3.9
+          python-version: '3.10'
           architecture: x64
       - name: Install Rust toolchain
         uses: actions-rs/toolchain@v1
@@ -25,7 +25,7 @@ jobs:
         uses: messense/maturin-action@v1
         with:
           target: x86_64
-          args: --release --out dist
+          args: --release --sdist --out dist
       - name: Install built wheel - x86_64
         run: |
           pip install rjieba --no-index --find-links dist --force-reinstall
@@ -34,7 +34,7 @@ jobs:
       - name: Build wheels - universal2
         uses: messense/maturin-action@v1
         with:
-          args: --release --universal2 --out dist --no-sdist
+          args: --release --universal2 --out dist
       - name: Install built wheel - universal2
         run: |
           pip install rjieba --no-index --find-links dist --force-reinstall
@@ -51,10 +51,10 @@ jobs:
       matrix:
         target: [x64, x86]
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-python@v2
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
         with:
-          python-version: 3.9
+          python-version: '3.10'
           architecture: ${{ matrix.target }}
       - name: Install Rust toolchain
         uses: actions-rs/toolchain@v1
@@ -66,7 +66,7 @@ jobs:
         uses: messense/maturin-action@v1
         with:
           target: ${{ matrix.target }}
-          args: --release --out dist --no-sdist
+          args: --release --out dist
       - name: Install built wheel
         run: |
           pip install rjieba --no-index --find-links dist --force-reinstall
@@ -84,17 +84,17 @@ jobs:
       matrix:
         target: [x86_64, i686]
     steps:
-    - uses: actions/checkout@v2
-    - uses: actions/setup-python@v2
+    - uses: actions/checkout@v3
+    - uses: actions/setup-python@v4
       with:
-        python-version: 3.9
+        python-version: '3.10'
         architecture: x64
     - name: Build wheels
       uses: messense/maturin-action@v1
       with:
         target: ${{ matrix.target }}
         manylinux: auto
-        args: --release --out dist --no-sdist
+        args: --release --out dist
     - name: Install built wheel
       if: matrix.target == 'x86_64'
       run: |
@@ -113,17 +113,17 @@ jobs:
       matrix:
         target: [aarch64, armv7, s390x, ppc64le, ppc64]
     steps:
-    - uses: actions/checkout@v2
-    - uses: actions/setup-python@v2
+    - uses: actions/checkout@v3
+    - uses: actions/setup-python@v4
       with:
-        python-version: 3.9
+        python-version: '3.10'
     - name: Build wheels
       uses: messense/maturin-action@v1
       with:
         target: ${{ matrix.target }}
         manylinux: auto
-        args: --release --out dist --no-sdist
-    - uses: uraimo/run-on-arch-action@v2.0.5
+        args: --release --out dist
+    - uses: uraimo/run-on-arch-action@v2.2.1
       if: matrix.target != 'ppc64'
       name: Install built wheel
       with:
@@ -152,17 +152,17 @@ jobs:
           - x86_64-unknown-linux-musl
           - i686-unknown-linux-musl
     steps:
-    - uses: actions/checkout@v2
-    - uses: actions/setup-python@v2
+    - uses: actions/checkout@v3
+    - uses: actions/setup-python@v4
       with:
-        python-version: 3.9
+        python-version: '3.10'
         architecture: x64
     - name: Build wheels
       uses: messense/maturin-action@v1
       with:
         target: ${{ matrix.target }}
         manylinux: musllinux_1_2
-        args: --release --out dist --no-sdist
+        args: --release --out dist
     - name: Install built wheel
       if: matrix.target == 'x86_64-unknown-linux-musl'
       uses: addnab/docker-run-action@v3
@@ -190,17 +190,17 @@ jobs:
           - target: armv7-unknown-linux-musleabihf
             arch: armv7
     steps:
-    - uses: actions/checkout@v2
-    - uses: actions/setup-python@v2
+    - uses: actions/checkout@v3
+    - uses: actions/setup-python@v4
       with:
-        python-version: 3.9
+        python-version: '3.10'
     - name: Build wheels
       uses: messense/maturin-action@v1
       with:
         target: ${{ matrix.platform.target }}
         manylinux: musllinux_1_2
-        args: --release --out dist --no-sdist
-    - uses: uraimo/run-on-arch-action@master
+        args: --release --out dist
+    - uses: uraimo/run-on-arch-action@v2.2.1
       name: Install built wheel
       with:
         arch: ${{ matrix.platform.arch }}
@@ -227,10 +227,10 @@ jobs:
       - uses: actions/download-artifact@v2
         with:
           name: wheels
-      - uses: actions/setup-python@v2
+      - uses: actions/setup-python@v4
         with:
-          python-version: 3.9
-      - name: Publish to PyPi
+          python-version: '3.10'
+      - name: Publish to PyPI
         env:
           TWINE_USERNAME: __token__
           TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
