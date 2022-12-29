@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - zig
   pull_request:
 
 jobs:
@@ -123,7 +124,6 @@ jobs:
       with:
         target: ${{ matrix.target }}
         manylinux: auto
-        container: off
         args: --release --out dist --zig
     - uses: uraimo/run-on-arch-action@v2.2.1
       if: matrix.target != 'ppc64'
