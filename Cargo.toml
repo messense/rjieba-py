@@ -16,4 +16,4 @@ crate-type = ["cdylib"]
 
 [dependencies]
 jieba-rs = "0.6.7"
-pyo3 = { version = "0.20.0", features = ["abi3-py37", "extension-module"] }
+pyo3 = { version = "0.23.1", features = ["abi3-py37", "extension-module"] }
