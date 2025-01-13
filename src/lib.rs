@@ -69,7 +69,7 @@ impl Jieba {
 }
 
 #[pymodule]
-fn rjieba(_py: Python, m: &PyModule) -> PyResult<()> {
+fn rjieba(_py: Python, m: &Bound<PyModule>) -> PyResult<()> {
     m.add_class::<Jieba>()?;
     Ok(())
 }
