@@ -1,8 +1,9 @@
 use pyo3::prelude::*;
+use std::sync::Mutex;
 
 #[pyclass(subclass)]
 struct Jieba {
-    jieba: jieba_rs::Jieba,
+    jieba: Mutex<jieba_rs::Jieba>,
 }
 
 #[pymethods]
@@ -10,36 +11,50 @@ impl Jieba {
     #[new]
     fn new() -> Self {
         Self {
-            jieba: jieba_rs::Jieba::new(),
+            jieba: Mutex::new(jieba_rs::Jieba::new()),
         }
+    }
+
+    /// Add word to the dictionary
+    #[pyo3(signature = (word, freq = 0, tag = None))]
+    fn add_word<'a>(
+        &self,
+        py: Python,
+        word: &'a str,
+        freq: Option<usize>,
+        tag: Option<&str>,
+    ) -> usize {
+        py.allow_threads(move || self.jieba.lock().unwrap().add_word(word, freq, tag))
     }
 
     /// Cut the input text
     #[pyo3(signature = (text, hmm = true))]
     fn cut<'a>(&self, py: Python, text: &'a str, hmm: bool) -> Vec<&'a str> {
-        py.allow_threads(move || self.jieba.cut(text, hmm))
+        py.allow_threads(move || self.jieba.lock().unwrap().cut(text, hmm))
     }
 
     /// Cut the input text, return all possible words
     #[pyo3(signature = (text,))]
     fn cut_all<'a>(&self, py: Python, text: &'a str) -> Vec<&'a str> {
-        py.allow_threads(move || self.jieba.cut_all(text))
+        py.allow_threads(move || self.jieba.lock().unwrap().cut_all(text))
     }
 
     /// Cut the input text in search mode
     #[pyo3(signature = (text, hmm = true))]
     fn cut_for_search<'a>(&self, py: Python, text: &'a str, hmm: bool) -> Vec<&'a str> {
-        py.allow_threads(move || self.jieba.cut_for_search(text, hmm))
+        py.allow_threads(move || self.jieba.lock().unwrap().cut_for_search(text, hmm))
     }
 
     /// Tag the input text
     #[pyo3(signature = (text, hmm = true))]
-    fn tag<'a>(&'a self, py: Python, text: &'a str, hmm: bool) -> Vec<(&'a str, &'a str)> {
+    fn tag<'a>(&'a self, py: Python, text: &'a str, hmm: bool) -> Vec<(String, String)> {
         py.allow_threads(move || {
             self.jieba
+                .lock()
+                .unwrap()
                 .tag(text, hmm)
                 .into_iter()
-                .map(|t| (t.word, t.tag))
+                .map(|t| (t.word.to_string(), t.tag.to_string()))
                 .collect()
         })
     }
@@ -60,6 +75,8 @@ impl Jieba {
         };
         py.allow_threads(move || {
             self.jieba
+                .lock()
+                .unwrap()
                 .tokenize(text, tokenize_mode, hmm)
                 .into_iter()
                 .map(|t| (t.word, t.start, t.end))
