@@ -160,9 +160,9 @@ dependencies = [
 
 [[package]]
 name = "jieba-rs"
-version = "0.7.2"
+version = "0.7.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "6d1bcad6332969e4d48ee568d430e14ee6dea70740c2549d005d87677ebefb0c"
+checksum = "b06096b4b61fb4bfdbf16c6a968ea2d6be1ac9617cf3db741c3b641e6c290a35"
 dependencies = [
  "cedarwood",
  "fxhash",
