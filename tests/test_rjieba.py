@@ -2,6 +2,11 @@
 import rjieba as jieba
 
 
+def test_add_word():
+    assert jieba.cut('石墨烯是个好东西') == ['石墨', '烯', '是', '个', '好', '东西']
+    jieba.add_word('石墨烯', 100)
+    assert jieba.cut('石墨烯是个好东西') == ['石墨烯', '是', '个', '好', '东西']
+
 def test_cut():
     ret = jieba.cut('')
     assert ret == []
