@@ -17,25 +17,25 @@ impl Jieba {
     /// Cut the input text
     #[pyo3(signature = (text, hmm = true))]
     fn cut<'a>(&self, py: Python, text: &'a str, hmm: bool) -> Vec<&'a str> {
-        py.allow_threads(move || self.jieba.cut(text, hmm))
+        py.detach(move || self.jieba.cut(text, hmm))
     }
 
     /// Cut the input text, return all possible words
     #[pyo3(signature = (text,))]
     fn cut_all<'a>(&self, py: Python, text: &'a str) -> Vec<&'a str> {
-        py.allow_threads(move || self.jieba.cut_all(text))
+        py.detach(move || self.jieba.cut_all(text))
     }
 
     /// Cut the input text in search mode
     #[pyo3(signature = (text, hmm = true))]
     fn cut_for_search<'a>(&self, py: Python, text: &'a str, hmm: bool) -> Vec<&'a str> {
-        py.allow_threads(move || self.jieba.cut_for_search(text, hmm))
+        py.detach(move || self.jieba.cut_for_search(text, hmm))
     }
 
     /// Tag the input text
     #[pyo3(signature = (text, hmm = true))]
     fn tag<'a>(&'a self, py: Python, text: &'a str, hmm: bool) -> Vec<(&'a str, &'a str)> {
-        py.allow_threads(move || {
+        py.detach(move || {
             self.jieba
                 .tag(text, hmm)
                 .into_iter()
@@ -58,7 +58,7 @@ impl Jieba {
         } else {
             jieba_rs::TokenizeMode::Default
         };
-        py.allow_threads(move || {
+        py.detach(move || {
             self.jieba
                 .tokenize(text, tokenize_mode, hmm)
                 .into_iter()
