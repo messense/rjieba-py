@@ -1,8 +1,8 @@
 [package]
 name = "rjieba"
-version = "0.1.13"
+version = "0.2.0"
 authors = ["messense <messense@icloud.com>"]
-edition = "2018"
+edition = "2024"
 description = "jieba-rs Python binding"
 license = "MIT"
 repository = "https://github.com/messense/rjieba-py"
