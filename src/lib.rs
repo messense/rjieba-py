@@ -17,19 +17,37 @@ impl Jieba {
     /// Cut the input text
     #[pyo3(signature = (text, hmm = true))]
     fn cut<'a>(&self, py: Python, text: &'a str, hmm: bool) -> Vec<&'a str> {
-        py.detach(move || self.jieba.cut(text, hmm))
+        py.detach(move || {
+            self.jieba
+                .cut(text, hmm)
+                .into_iter()
+                .map(|t| t.word)
+                .collect()
+        })
     }
 
     /// Cut the input text, return all possible words
     #[pyo3(signature = (text,))]
     fn cut_all<'a>(&self, py: Python, text: &'a str) -> Vec<&'a str> {
-        py.detach(move || self.jieba.cut_all(text))
+        py.detach(move || {
+            self.jieba
+                .cut_all(text)
+                .into_iter()
+                .map(|t| t.word)
+                .collect()
+        })
     }
 
     /// Cut the input text in search mode
     #[pyo3(signature = (text, hmm = true))]
     fn cut_for_search<'a>(&self, py: Python, text: &'a str, hmm: bool) -> Vec<&'a str> {
-        py.detach(move || self.jieba.cut_for_search(text, hmm))
+        py.detach(move || {
+            self.jieba
+                .cut_for_search(text, hmm)
+                .into_iter()
+                .map(|t| t.word)
+                .collect()
+        })
     }
 
     /// Tag the input text
