@@ -84,6 +84,34 @@ impl Jieba {
                 .collect()
         })
     }
+
+    /// Create a new instance with empty dict
+    #[staticmethod]
+    fn empty() -> Self {
+        Self {
+            jieba: jieba_rs::Jieba::empty(),
+        }
+    }
+
+    /// Clears all data
+    fn clear(&mut self) {
+        self.jieba.clear();
+    }
+
+    /// Suggest word frequency to force the characters in a word to be joined or split
+    fn suggest_freq(&self, segment: &str) -> usize {
+        self.jieba.suggest_freq(segment)
+    }
+
+    /// Add word to dict, return `freq`
+    fn add_word(&mut self, word: &str, freq: Option<usize>, tag: Option<&str>) -> usize {
+        self.jieba.add_word(word, freq, tag)
+    }
+
+    /// Checks if a word exists in the dictionary
+    fn has_word(&self, word: &str) -> bool {
+        self.jieba.has_word(word)
+    }
 }
 
 #[pymodule]
